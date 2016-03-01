@@ -9,6 +9,9 @@ __pycache__/
 # Octave
 *octave-workspace
 
+# Coursera submission tokens
+token.mat
+
 # vim
 *.swp
 
