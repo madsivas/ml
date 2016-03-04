@@ -17,7 +17,7 @@ for iter = 1:num_iters
     %       of the cost function (computeCost) and gradient here.
     %
 
-    c = computeCost(X, y, theta)
+    % c = computeCost(X, y, theta)
     theta_0 = theta(1, 1);
     theta_1 = theta(2, 1);
 

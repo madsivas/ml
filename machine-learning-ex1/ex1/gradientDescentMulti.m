@@ -17,13 +17,24 @@ for iter = 1:num_iters
     %       of the cost function (computeCostMulti) and gradient here.
     %
 
+   TH = zeros(size(theta));
+   for i = 1:size(theta)
+      TH(i) = theta(i, 1);
+   end
 
+   hyp = X * theta;
+   % sigma_diff = sum(hyp - y)
+   % alpha_sigma = (alpha / m) * sum((hyp - y)' * X)
 
+   for i = 1:size(theta)
+      T(i) = TH(i) - ((alpha / m) .* sum((hyp - y)' * X(:, i)));
+   end
 
+   for i = 1:size(theta)
+      TH(i) = T(i);
+   end
 
-
-
-
+   theta = TH;
 
 
 

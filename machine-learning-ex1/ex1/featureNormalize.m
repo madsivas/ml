@@ -27,6 +27,12 @@ sigma = zeros(1, size(X, 2));
 %       
 
 
+mu = mean(X);
+tempX = X - mu;
+for i = 1:size(tempX, 2)
+   sigma(i) = std(X(:,i));
+end
+X_norm = tempX ./ sigma;
 
 
 
