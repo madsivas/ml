@@ -12,7 +12,7 @@ figure; hold on;
 %               examples and 'ko' for the negative examples.
 %
 
-M = [X y]
+M = [X y];
 P = M(find(M(:,3) == 1), :);
 N = M(find(M(:,3) == 0), :);
 P = P(:, [1, 2]);
@@ -20,10 +20,10 @@ N = N(:, [1, 2]);
 size(P)
 size(N)
 
-%plot(N, 'go;Not Admitted;', 'MarkerSize', 5); % Plot the negative data
+%plot(N, 'yo;Not Admitted;', 'MarkerSize', 5); % Plot the negative data
 %plot(P, 'r+rAdmitted;', 'MarkerSize', 5); % Plot the positive data
 
-plot(N(:, 1), N(:, 2), 'go;Not Admitted;', P(:, 1), P(:, 2), 'r+;Admitted;', 'MarkerSize', 5);
+plot(P(:, 1), P(:, 2), 'g+;Admitted;', N(:, 1), N(:, 2), 'ro;Not Admitted;');
 
 %for i = 1 : size(X, 1)
 %	if y(i) == 0
