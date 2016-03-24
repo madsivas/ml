@@ -172,12 +172,19 @@ delta_2 = (delta_3 * Theta2_rest) .* sigmoidGradient(Z2);
 
 %sz_delta_2 = size(delta_2)
 
-delta_2 = delta_2(2:end);
+%sz_A1 = size(A1)
+%sz_A2 = size(A2)
+Delta_1 = zeros(hidden_layer_size, num_labels);
+Delta_1 = delta_2' * A1;
+%sz_Delta_1 = size(Delta_1)
 
-A2 = sigmoid(Z2); % reinit as A2 was polluted earlier with adding ones'
-Delta_2 = zeros(hidden_layer_size, num_labels);
-Delta_2 = Delta_2 + (A2' * delta_3);
+Delta_2 = zeros(num_labels, hidden_layer_size + 1);
+Delta_2 = delta_3' * A2;
 %sz_Delta_2 = size(Delta_2)
+
+Theta1_grad = (1/m) * Delta_1;
+Theta2_grad = (1/m) * Delta_2;
+
 
 
 % -------------------------------------------------------------
