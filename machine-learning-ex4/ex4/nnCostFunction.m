@@ -68,15 +68,13 @@ Theta2_grad = zeros(size(Theta2));
 % Add ones to the X data matrix
 A1 = [ones(m, 1) X];
 
-% size(Theta1)
-% size(Theta2)
 % size(X)
 % size(A1)
 
 Z2 = A1 * Theta1';
 A2 = sigmoid(Z2);
 
-sz_A2 = size(A2)
+%sz_A2 = size(A2)
 
 % Add bias term to the A2 data matrix
 A2 = [ones(m, 1) A2];
@@ -85,24 +83,18 @@ hyp = sigmoid(Z3);
 
 sz_hyp = size(hyp)
 
+
 % make a binary vector of y-values: 2 => [0; 1; 0; 0; ...0], 5 => [0; 0; 0; 0; 1; 0; ...0]
 K = num_labels;
 for i = 1 : m
    for k = 1 : K
       ybin = zeros(K, 1);
-      if y(i) == 10
-         % yi
-         % y(i)
-         ybin(K, 1) = 1;
-      else
-         if y(i) == k 
-            % y(i)
-            ybin(k, 1) = 1;
-         endif
+      if y(i) == k 
+         ybin(k, 1) = 1;
       endif
 
       %sz_ybin = size(ybin)
-      %ybin
+      %ybin'
 
       %hyp(i, :)
       %log(hyp(i, :))
@@ -110,13 +102,83 @@ for i = 1 : m
       term_1 = ybin(k, 1) * log(hyp(i, k));
       term_2 = (1 - ybin(k, 1)) * log(1 - hyp(i, k));
       J = J .+ sum(term_1 + term_2);
+
    endfor % k
 endfor % i
 
-J = -(1 / m) * J
+J = -(1 / m) * J;
 
+% Need for regularization -------------------------------------------
+   Theta1_rest = Theta1(:, 2:end);
+   Theta2_rest = Theta2(:, 2:end);
+
+if lambda > 0
+   size(Theta1_rest)
+   size(Theta2_rest)
+
+   Theta1_reg_term = 0;
+   for j = 1 : hidden_layer_size
+      for k = 1 : input_layer_size
+         Theta1_reg_term = Theta1_reg_term + Theta1_rest(j, k) ^ 2;
+      endfor % k
+   endfor % j
+   Theta1_reg_term
+
+   Theta2_reg_term = 0;
+   for j = 1 : num_labels
+      for k = 1 : hidden_layer_size
+         Theta2_reg_term = Theta2_reg_term + Theta2_rest(j, k) ^ 2;
+      endfor % k
+   endfor % j
+   Theta2_reg_term
+
+   reg_term = (lambda / (2 * m)) * (Theta1_reg_term + Theta2_reg_term)
+
+   J = J + reg_term
+endif % lambda > 0
 
 % Part 2 -------------------------------------------------------------
+% Back propagation
+printf("Back propagation...\n");
+
+delta_3 = zeros(m, K);
+
+for i = 1 : m
+   ybin = zeros(K, 1);
+   for k = 1 : K
+      if y(i) == k 
+         % y(i)
+         ybin(k, 1) = 1;
+      endif
+
+      %sz_ybin = size(ybin)
+      %ybin
+
+      %hyp(i, :)
+
+   endfor % k
+   %ybin'
+   %hyp(i, :)
+
+   delta_3(i, :) = hyp(i, :) .- ybin';
+endfor % i
+
+
+%sz_Theta2_rest_transpose = size(Theta2_rest')
+%sz_delta_3 = size(delta_3)
+%sz_sigmoidGradient_Z2 = size(sigmoidGradient(Z2))
+
+delta_2 = (delta_3 * Theta2_rest) .* sigmoidGradient(Z2);
+
+%sz_delta_2 = size(delta_2)
+
+delta_2 = delta_2(2:end);
+
+A2 = sigmoid(Z2); % reinit as A2 was polluted earlier with adding ones'
+Delta_2 = zeros(hidden_layer_size, num_labels);
+Delta_2 = Delta_2 + (A2' * delta_3);
+%sz_Delta_2 = size(Delta_2)
+
 
 % -------------------------------------------------------------
 
