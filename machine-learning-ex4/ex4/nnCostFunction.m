@@ -185,7 +185,13 @@ Delta_2 = delta_3' * A2;
 Theta1_grad = (1/m) * Delta_1;
 Theta2_grad = (1/m) * Delta_2;
 
+% Now with regularization -------------------------------------
 
+Theta1(:, 1) = 0;
+Theta2(:, 1) = 0;
+
+Theta1_grad = Theta1_grad + ((lambda/m) * Theta1); 
+Theta2_grad = Theta2_grad + ((lambda/m) * Theta2); 
 
 % -------------------------------------------------------------
 
