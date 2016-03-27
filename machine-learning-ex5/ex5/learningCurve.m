@@ -55,9 +55,9 @@ error_val   = zeros(m, 1);
 % ---------------------- Sample Solution ----------------------
 
 
-lambda
-sz_X = size(X)
-sz_y = size(y)
+%lambda
+%sz_X = size(X)
+%sz_y = size(y)
 
 for i = 1:m
    [theta] = trainLinearReg(X(1:i, :), y(1:i), lambda);

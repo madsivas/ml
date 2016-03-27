@@ -39,7 +39,23 @@ error_val = zeros(length(lambda_vec), 1);
 %
 %
 
+m = size(X, 1); % number of training examples
+n = size(Xval, 1); % number of validation examples
 
+for i = 1:length(lambda_vec)
+   lambda = lambda_vec(i);
+
+   [theta] = trainLinearReg(X, y, lambda);
+   hyp = X * theta;
+
+   error_train(i) = (1 / (2 * m)) * sum((hyp - y) .^ 2);
+
+   hyp_val = Xval * theta;
+   error_val(i) = (1 / (2 * n)) * sum((hyp_val - yval) .^ 2);
+endfor % lambda variations
+
+error_train
+error_val
 
 
 
