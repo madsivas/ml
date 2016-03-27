@@ -16,8 +16,16 @@ X_poly = zeros(numel(X), p);
 % 
 
 
+m = size(X, 1); % number of training examples
+
+for i = 1 : m
+   for j = 1 : p
+      X_poly(i, j) = X(i, 1) .^ j;
+   endfor
+endfor
 
 
+%sz_X_poly = size(X_poly)
 
 
 % =========================================================================
