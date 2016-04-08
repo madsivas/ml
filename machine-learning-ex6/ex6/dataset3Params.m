@@ -25,15 +25,17 @@ sigma = 0.3;
 
 
 min_pred_error = 100000000;
-for c = [0.01; 0.03; 0.1; 0.3; 1; 3; 10; 30]
-   for s = [0.01; 0.03; 0.1; 0.3; 1; 3; 10; 30]
-      model= svmTrain(X, y, c, @(x1, x2) gaussianKernel(x1, x2, s)); 
+c = [0.01; 0.03; 0.1; 0.3; 1; 3; 10; 30];
+s = [0.01; 0.03; 0.1; 0.3; 1; 3; 10; 30];
+for i = 1:size(c, 1)
+   for j = 1:size(s, 1)
+      model= svmTrain(X, y, c(i), @(x1, x2) gaussianKernel(x1, x2, s(j))); 
       predictions = svmPredict(model, Xval);
       pred_error = mean(double(predictions ~= yval));
       if pred_error < min_pred_error
          min_pred_error = pred_error;
-         C = c;
-         sigma = s;
+         C = c(i);
+         sigma = s(j);
       endif
    endfor
 endfor
