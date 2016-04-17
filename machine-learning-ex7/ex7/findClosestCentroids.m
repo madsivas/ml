@@ -24,8 +24,8 @@ idx = zeros(size(X,1), 1);
 
 m = size(X, 1);
 distX = zeros(m, K);
-size(X)
-centroids
+%size(X)
+%centroids
 for i = 1 : m
    diffs = bsxfun(@minus, X(i, :), centroids);
    distX(i, :) = sum(diffs .^ 2, 2);
