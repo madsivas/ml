@@ -41,19 +41,24 @@ Theta_grad = zeros(size(Theta));
 %
 
 
+%sz_Xgrad = size(X_grad)
+%sz_Theta_grad = size(Theta_grad)
 
+term1 = (X * Theta') - Y;
+J = (1 / 2) * sum((term1(R==1)) .^ 2);
 
+%num_movies
+%num_features
+%num_users
 
+%sz_term1 = size(term1)
+X_grad = (R .* term1) * Theta;
 
+Theta_grad = (R' .* term1') * X;
 
-
-
-
-
-
-
-
-
+%sz_term1_transpose = size(term1')
+%sz_X = size(X)
+%sz_Theta_grad = size(Theta_grad)
 
 % =============================================================
 
