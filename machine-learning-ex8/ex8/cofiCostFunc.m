@@ -41,24 +41,15 @@ Theta_grad = zeros(size(Theta));
 %
 
 
-%sz_Xgrad = size(X_grad)
-%sz_Theta_grad = size(Theta_grad)
-
 term1 = (X * Theta') - Y;
-J = (1 / 2) * sum((term1(R==1)) .^ 2);
+J_noreg = (1 / 2) * sum((term1(R==1)) .^ 2);
+reg_term_theta = (lambda / 2) * sum(sum(Theta .^ 2));
+reg_term_x = (lambda / 2) * sum(sum(X .^ 2));
+J = J_noreg + reg_term_theta + reg_term_x;
 
-%num_movies
-%num_features
-%num_users
+X_grad = ((R .* term1) * Theta) + (lambda .* X);
 
-%sz_term1 = size(term1)
-X_grad = (R .* term1) * Theta;
-
-Theta_grad = (R' .* term1') * X;
-
-%sz_term1_transpose = size(term1')
-%sz_X = size(X)
-%sz_Theta_grad = size(Theta_grad)
+Theta_grad = ((R' .* term1') * X) + (lambda .* Theta);
 
 % =============================================================
 
